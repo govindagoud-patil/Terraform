@@ -38,7 +38,7 @@ jobs:
     
     - name: HashiCorp - default init  
       id: defaultinit
-      run: terraform init -reconfigure 
+      run: terraform init  
 
         
     - name: HashiCorp - workspace create 
@@ -49,7 +49,7 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
+      run: terraform init -var-file=${{ env.tfvarfilepath }}
       
     - name: 'Terraform format'
       id: fmt
