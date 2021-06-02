@@ -10,6 +10,7 @@ on:
 env:
  tfvarfilename: "./test/test.tfvars"
  workspacename: "test"
+ tfworkingdirectory: .
  
 
 jobs:
@@ -26,7 +27,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        working-directory: .
+        shell: bash
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -48,7 +49,7 @@ jobs:
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'init'
-        tf_actions_working_dir: "."
+        tf_actions_working_dir: ${{env.tfworkingdirectory}}
         args: '-var-file=${{env.tfvarfilename}} -reconfigure'
       env:
         TF_WORKSPACE: ${{env.workspacename}}
@@ -58,7 +59,7 @@ jobs:
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'plan'
-        tf_actions_working_dir: "."
+        tf_actions_working_dir: ${{env.tfworkingdirectory}}
         args: '-var-file="${{env.tfvarfilename}} '
       env:
         TF_WORKSPACE: ${{env.workspacename}}
@@ -68,7 +69,7 @@ jobs:
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'apply'
-        tf_actions_working_dir: "."
+        tf_actions_working_dir: ${{env.tfworkingdirectory}}
         args: '-var-file=${{env.tfvarfilename}} '
       env:
         TF_WORKSPACE: ${{env.workspacename}}
