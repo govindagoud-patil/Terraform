@@ -30,6 +30,6 @@ jobs:
     - uses: hashicorp/setup-terraform@v1.2.1
       
     - name: HashiCorp - Setup workspace
-    - id: workspace
-    - run: terraform workspace new dev
+      id: workspace
+      run: terraform workspace new dev
 
