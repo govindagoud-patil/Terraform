@@ -5,4 +5,8 @@ terraform {
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
+  
+ workspaces = {
+      name = "dev"
+  }
 }
