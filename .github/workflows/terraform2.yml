@@ -15,8 +15,10 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      Varfile: "./prod/prod.tfvars"
+
     runs-on: ubuntu-latest
-    environment: production
+    
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -45,8 +47,12 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure -var-file="./prod/prod.tfvars"
+      run: terraform init -reconfigure -var-file=${{ Varfile }}
           
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var-file="./prod/prod.tfvars"
+      run: terraform plan -var-file={{ Varfile }}
+      
+    - name: 'Terraform apply'
+      id: apply
+      run: terraform apply -var-file={{ Varfile }}
