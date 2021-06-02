@@ -35,6 +35,12 @@ jobs:
     - uses: hashicorp/setup-terraform@v1.2.1
       with:
        terraform_version: 0.14.8
+       
+    - name: 'Terraform init'
+      id: init
+      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
 
     - name: 'Terraform destroy'
       uses: hashicorp/terraform-github-actions@master 
