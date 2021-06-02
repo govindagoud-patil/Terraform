@@ -7,8 +7,9 @@ on:
   workflow_dispatch:
 
 env:  
- Varfile: "./prod/prod.tfvars"
-
+ tfvarfilepath: "./test/test.tfvars"
+ workspacename: "test"
+ tfworkingDirectory: .
 
 jobs:
   terraform:
@@ -18,7 +19,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-      Varfile: "./prod/prod.tfvars"
+ 
 
     runs-on: ubuntu-latest
     
@@ -26,7 +27,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        working-directory: .
+        working-directory: ${{env.tfworkingDirectory}}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -43,19 +44,19 @@ jobs:
     - name: HashiCorp - workspace  
       id: workspace
       run: |
-            terraform workspace new prod2
-            terraform worksspace select prod2
+            terraform workspace new ${{env.workspacename}}
+            terraform worksspace select ${{env.workspacename}}
       continue-on-error: true
 
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure -var-file=${{ env.Varfile }}
+      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
           
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var-file=${{ env.Varfile }}
+      run: terraform plan -var-file=${{ env.tfvarfilepath }}
       
     - name: 'Terraform apply'
       id: apply
-      run: terraform apply -var-file=${{ env.Varfile }}
+      run: terraform apply -var-file=${{ env.tfvarfilepath }}
