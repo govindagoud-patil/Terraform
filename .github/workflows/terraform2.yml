@@ -37,10 +37,8 @@ jobs:
         
     - name: HashiCorp - workspace  
       id: workspace
-      run: |
-            terraform workspace new prod
-            terraform worksspace select prod
-      continue-on-error: true
+      run: terraform workspace select prod | terraform worksspace new prod
+
 
     - name: 'Terraform init'
       id: init
