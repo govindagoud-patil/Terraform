@@ -1,0 +1,75 @@
+
+name: 'Terraform test'
+
+on:
+#  push:
+#    branches:
+#    - master
+  workflow_dispatch:
+
+env:
+ tfvarfilename: "./test/test.tfvars"
+ workspacename: "test"
+ 
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+    runs-on: ubuntu-latest
+
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1.2.1
+    
+    - name: HashiCorp - init  
+      id: init
+      run: terraform init -reconfigure
+
+        
+    - name: HashiCorp - workspace  
+      id: workspace
+      run: terraform workspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
+      continue-on-error: true
+
+    - name: 'Terraform init'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: "."
+        args: '-var-file=${{env.tfvarfilename}} -reconfigure'
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
+          
+    - name: 'Terraform Plan'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'plan'
+        tf_actions_working_dir: "."
+        args: '-var-file="${{env.tfvarfilename}} '
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
+     
+     - name: 'Terraform apply'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'apply'
+        tf_actions_working_dir: "."
+        args: '-var-file=${{env.tfvarfilename}} '
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
+
