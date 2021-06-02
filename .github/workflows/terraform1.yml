@@ -32,8 +32,12 @@ jobs:
     - name: HashiCorp - Terraform init 
       id: init
       run: terraform init
-      
     
+    - name: HashiCorp - workspace  
+      id: workspace
+      run: terraform workspace new dev
+      continue-on-error: true
+          
     - name: 'Terraform Plan'
       uses: hashicorp/terraform-github-actions@master
       with:
