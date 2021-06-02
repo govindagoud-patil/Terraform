@@ -36,10 +36,10 @@ jobs:
       with:
        terraform_version: 0.14.8
     
-   # - name: HashiCorp - default init  
-   #   id: defaultinit
-   #   run: terraform init  
-   #   working-directory: ${{env.tfworkingDirectory}}
+    - name: HashiCorp - default init  
+      id: defaultinit
+      run: terraform init  
+      working-directory: ${{env.tfworkingDirectory}}
 
         
     - name: HashiCorp - workspace create 
@@ -48,33 +48,46 @@ jobs:
             terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
       continue-on-error: true
 
+
     - name: 'Terraform init'
       id: init
       run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
       working-directory: ${{env.tfworkingDirectory}}
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
       
     - name: 'Terraform format'
       id: fmt
       run: terraform fmt -check 
       continue-on-error: true
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
       
     - name: 'Terraform validate'
       id: validate
       run: terraform validate -var-file=${{ env.tfvarfilepath }}
-      working-directory: ${{env.tfworkingDirectory}}      
+      working-directory: ${{env.tfworkingDirectory}}   
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
         
     - name: 'Terraform Plan'
       id: plan
       run: terraform plan -var-file=${{ env.tfvarfilepath }}
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
     
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
       run: exit 1
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
       
     - name: 'Terraform apply'
       id: apply
       run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
       working-directory: ${{env.tfworkingDirectory}}
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
       
 
 
