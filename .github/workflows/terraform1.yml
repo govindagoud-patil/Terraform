@@ -22,13 +22,14 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        shell: bash
+        working-directory: .
 
     steps:
     # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1.2.1
       
-    - name: HashiCorp - Setup Terraform
-      uses: hashicorp/setup-terraform@v1.2.1
+    - name: HashiCorp - Setup workspace
+    - id: workspace
+    - run: terraform workspace new dev
 
