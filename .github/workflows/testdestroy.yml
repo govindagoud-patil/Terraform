@@ -38,7 +38,7 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'destroy'
         tf_actions_working_dir: ${{env.tfworkingdirectory}}
-        args: '-var-file=${{env.tfvarfilename}} '
+        args: '-var-file="./test/test.tfvars" '
       env:
         TF_WORKSPACE: ${{env.workspacename}}
 
