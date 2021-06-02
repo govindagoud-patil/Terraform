@@ -28,6 +28,7 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1.2.1
+    
         
     - name: HashiCorp - workspace  
       id: workspace
@@ -40,7 +41,7 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: "."
-        args: '-var-file="./dev/dev.tfvars"'
+        args: '-var-file="./prod/prod.tfvars -reconfigure""'
       env:
         TF_WORKSPACE: prod
           
@@ -50,7 +51,7 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'plan'
         tf_actions_working_dir: "."
-        args: '-var-file="./dev/dev.tfvars"'
+        args: '-var-file="./prod/prod.tfvars"'
       env:
-        TF_WORKSPACE: prd
+        TF_WORKSPACE: prod
 
