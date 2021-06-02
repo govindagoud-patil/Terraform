@@ -32,8 +32,8 @@ jobs:
     steps:
     # Checkout the repository to the GitHub Actions runner
 
-- name: 'Terraform destroy'
-      uses: hashicorp/terraform-github-actions@master
+    - name: 'Terraform destroy'
+      uses: hashicorp/terraform-github-actions@master 
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'destroy'
