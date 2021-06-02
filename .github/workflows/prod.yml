@@ -59,6 +59,10 @@ jobs:
     - name: 'Terraform validate'
       id: validate
       run: terraform validate -var-file=${{ env.tfvarfilepath }}
+      
+    - name: 'Terraform refresh'
+      id: refresh
+      run: terraform refresh -var-file=${{ env.tfvarfilepath }}
           
     - name: 'Terraform Plan'
       id: plan
