@@ -76,9 +76,10 @@ jobs:
       if: steps.plan.outcome == 'failure'
       run: exit 1
       
- #   - name: 'Terraform apply'
- #     id: apply
- #     run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
+    - name: 'Terraform apply'
+      id: apply
+      run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
+      working-directory: ${{env.tfworkingDirectory}}
       
 
 
