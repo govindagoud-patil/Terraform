@@ -31,7 +31,7 @@ jobs:
     
     - name: HashiCorp - init  
       id: init
-      run: terraform init -reconfigure
+      run: terraform init 
       continue-on-error: true    
         
     - name: HashiCorp - workspace  
