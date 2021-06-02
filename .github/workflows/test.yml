@@ -63,7 +63,7 @@ jobs:
       env:
         TF_WORKSPACE: ${{env.workspacename}}
      
-     - name: 'Terraform apply'
+    - name: 'Terraform apply'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
