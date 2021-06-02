@@ -1,7 +1,7 @@
-application = "tfworkspaces"
+application = "testtfworkspaces"
 environment = "test"
 location    = "westeurope"
-capacity    = 3
+capacity    = 1
 
 default_tags = {
   environment = "Test"
