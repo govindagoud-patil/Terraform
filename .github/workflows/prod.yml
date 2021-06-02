@@ -27,7 +27,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        working-directory: ${{env.tfworkingDirectory}}
+        shell : bash
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -39,6 +39,7 @@ jobs:
     - name: HashiCorp - default init  
       id: defaultinit
       run: terraform init  
+      working-directory: ${{env.tfworkingDirectory}}
 
         
     - name: HashiCorp - workspace create 
@@ -50,6 +51,7 @@ jobs:
     - name: 'Terraform init'
       id: init
       run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
+      working-directory: ${{env.tfworkingDirectory}}
       
     - name: 'Terraform format'
       id: fmt
@@ -59,10 +61,12 @@ jobs:
     - name: 'Terraform validate'
       id: validate
       run: terraform validate -var-file=${{ env.tfvarfilepath }}
+      working-directory: ${{env.tfworkingDirectory}}
       
     - name: 'Terraform refresh'
       id: refresh
       run: terraform refresh 
+      working-directory: ${{env.tfworkingDirectory}}
           
     - name: 'Terraform Plan'
       id: plan
