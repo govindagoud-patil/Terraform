@@ -3,7 +3,7 @@ name: 'Terraform'
 on:
   push:
     branches:
-    - master
+    - master1
   workflow_dispatch:
 
 
