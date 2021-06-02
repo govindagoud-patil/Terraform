@@ -62,7 +62,7 @@ jobs:
       
     - name: 'Terraform refresh'
       id: refresh
-      run: terraform refresh -var-file=${{ env.tfvarfilepath }}
+      run: terraform refresh 
           
     - name: 'Terraform Plan'
       id: plan
@@ -72,9 +72,9 @@ jobs:
       if: steps.plan.outcome == 'failure'
       run: exit 1
       
-    - name: 'Terraform apply'
-      id: apply
-      run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
+ #   - name: 'Terraform apply'
+ #     id: apply
+ #     run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
       
 
 
