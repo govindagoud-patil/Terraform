@@ -50,12 +50,12 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure -var-file=${{ Varfile }}
+      run: terraform init -reconfigure -var-file=${{ env.Varfile }}
           
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var-file=${{ Varfile }}
+      run: terraform plan -var-file=${{ env.Varfile }}
       
     - name: 'Terraform apply'
       id: apply
-      run: terraform apply -var-file=${{ Varfile }}
+      run: terraform apply -var-file=${{ env.Varfile }}
