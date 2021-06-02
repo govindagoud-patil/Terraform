@@ -29,14 +29,15 @@ jobs:
     - uses: hashicorp/setup-terraform@v1.2.1
     
     - name: HashiCorp - init  
-      id: init
+      id: init1
       run: terraform init 
 
         
     - name: HashiCorp - workspace  
       id: workspace
-      run: terraform workspace new prod
-      run: terraform worksspace select prod
+      run: |
+            terraform workspace new prod
+            terraform worksspace select prod
       continue-on-error: true
 
     - name: 'Terraform init'
