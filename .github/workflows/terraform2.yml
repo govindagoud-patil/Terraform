@@ -42,8 +42,8 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure -var-file="./prod/prod.tfvars
+      run: terraform init -reconfigure -var-file="./prod/prod.tfvars"
           
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var-file="./prod/prod.tfvars
+      run: terraform plan -var-file="./prod/prod.tfvars"
