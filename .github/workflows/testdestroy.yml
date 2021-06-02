@@ -1,5 +1,5 @@
 
-name: 'Terraform test'
+name: 'Terraform test destroy'
 
 on:
 #  push:
