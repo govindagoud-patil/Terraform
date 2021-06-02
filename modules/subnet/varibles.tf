@@ -10,7 +10,7 @@ variable "location" {
 
 variable "tags" {
   description = "The tags to associate the resource we are creating"
-  type        = "map"
+  type        = map
   default     = {}
 }
 
@@ -22,7 +22,7 @@ variable "vnet_name" {
 }
 
 variable "subnets" {
-  type        = "list"
+  type        = list
   description = "The address prefix to use for the subnet."
   default     = []
 }
