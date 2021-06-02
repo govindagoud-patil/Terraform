@@ -58,4 +58,4 @@ jobs:
       
     - name: 'Terraform apply'
       id: apply
-      run: terraform apply -var-file=${{ env.tfvarfilepath }}
+      run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
