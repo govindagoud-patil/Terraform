@@ -29,6 +29,10 @@ jobs:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1.2.1
     
+    - name: HashiCorp - init  
+      id: init
+      run: terraform init -reconfigure
+      continue-on-error: true    
         
     - name: HashiCorp - workspace  
       id: workspace
@@ -41,7 +45,7 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: "."
-        args: '-var-file="./prod/prod.tfvars -reconfigure""'
+        args: '-var-file="./prod/prod.tfvars""'
       env:
         TF_WORKSPACE: prod
           
