@@ -1,7 +1,7 @@
 application = "devtfworkspaces"
 environment = "dev"
 location    = "westeurope"
-capacity    = 3
+capacity    = 1
 
 default_tags = {
   environment = "dev"
