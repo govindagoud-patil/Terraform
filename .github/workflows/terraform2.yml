@@ -37,7 +37,9 @@ jobs:
         
     - name: HashiCorp - workspace  
       id: workspace
-      run: terraform workspace select prod2 || terraform worksspace new prod2
+      run: |
+            terraform workspace new prod2
+            terraform worksspace select prod2
       continue-on-error: true
 
 
