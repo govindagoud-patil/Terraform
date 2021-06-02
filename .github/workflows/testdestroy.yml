@@ -1,0 +1,44 @@
+
+name: 'Terraform test'
+
+on:
+#  push:
+#    branches:
+#    - master
+  workflow_dispatch:
+
+env:
+ tfvarfilename: "./test/test.tfvars"
+ workspacename: "test"
+ tfworkingdirectory: .
+ 
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+    runs-on: ubuntu-latest
+
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+
+- name: 'Terraform destroy'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'destroy'
+        tf_actions_working_dir: ${{env.tfworkingdirectory}}
+        args: '-var-file=${{env.tfvarfilename}} '
+      env:
+        TF_WORKSPACE: ${{env.workspacename}}
+
