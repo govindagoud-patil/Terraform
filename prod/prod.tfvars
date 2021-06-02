@@ -1,4 +1,4 @@
-application = "tfworkspaces"
+application = "prodtfworkspaces"
 environment = "prod"
 location    = "westeurope"
 capacity    = 3
