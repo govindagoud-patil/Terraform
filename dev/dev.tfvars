@@ -1,4 +1,4 @@
-application = "dtfworkspaces"
+application = "devtfworkspaces"
 environment = "dev"
 location    = "westeurope"
 capacity    = 3
