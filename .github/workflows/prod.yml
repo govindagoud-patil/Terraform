@@ -36,10 +36,10 @@ jobs:
       with:
        terraform_version: 0.14.8
     
-    - name: HashiCorp - default init  
-      id: defaultinit
-      run: terraform init  
-      working-directory: ${{env.tfworkingDirectory}}
+   # - name: HashiCorp - default init  
+   #   id: defaultinit
+   #   run: terraform init  
+   #   working-directory: ${{env.tfworkingDirectory}}
 
         
     - name: HashiCorp - workspace create 
