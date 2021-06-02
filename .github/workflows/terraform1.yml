@@ -31,7 +31,7 @@ jobs:
     
     - name: HashiCorp - init  
       id: init
-      run: terraform init 
+      run: terraform init -reconfigure
       continue-on-error: true    
         
     - name: HashiCorp - workspace  
@@ -45,7 +45,7 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: "."
-        args: '-var-file="./prod/prod.tfvars""'
+        args: '-var-file="./prod/prod.tfvars" -reconfigure'
       env:
         TF_WORKSPACE: prod
           
