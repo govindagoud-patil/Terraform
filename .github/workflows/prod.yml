@@ -45,7 +45,8 @@ jobs:
     - name: HashiCorp - workspace create 
       id: workspace
       run: |
-             terraform workspace new ${{env.workspacename}}             
+             terraform workspace new ${{env.workspacename}}
+             terraform workspace select ${{env.workspacename}}             
       continue-on-error: true
 
 
