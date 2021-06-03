@@ -51,7 +51,7 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }} -backend-config="container_name=tfstate/${{env.workspacename}}"
+      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }} -backend-config="container_name=state"
       env:
        TF_WORKSPACE: ${{env.workspacename}}
 
