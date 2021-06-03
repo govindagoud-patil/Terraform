@@ -47,10 +47,13 @@ jobs:
       continue-on-error: true
 
     - name: variable
+      env: 
+       githubname: ${{ github.base_ref }}
+       githubnumber: ${{ github.event.number }}
       run: | 
-             echo ${{ github.event.number }}
-             echo ${{ github}}
-             echo ${{ github.base_ref}}
+             echo $githubname
+             echo $githubnumber
+             echo "$GITHUB_CONTEXT"
 
     - name: 'Terraform init'
       id: init
