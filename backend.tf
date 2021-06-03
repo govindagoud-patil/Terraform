@@ -4,7 +4,7 @@ terraform {
     storage_account_name = "gtpkeyvaulttest"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
-    
- }
+
+  }
 
 }
