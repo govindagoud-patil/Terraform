@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:  
- tfvarfilepath: "./${GITHUB_REF##*/}/${GITHUB_REF##*/}.tfvars"
- workspacename: ${GITHUB_REF##*/}
+ tfvarfilepath: "./dev/dev.tfvars"
+ workspacename: "dev"
  tfworkingDirectory: .
 
 jobs:
@@ -46,6 +46,11 @@ jobs:
              terraform workspace new ${{env.workspacename}}                     
       continue-on-error: true
 
+    - name: variable
+      run: | 
+             echo ${{ github.event.number }}
+             echo ${{ github}}
+             echo ${{ github.base_ref}}
 
     - name: 'Terraform init'
       id: init
