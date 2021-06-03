@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:  
- tfvarfilepath: "./test/test.tfvars"
- workspacename: "client2"
+ tfvarfilepath: "./dev/dev.tfvars"
+ workspacename: "dev"
  tfworkingDirectory: .
  
 
@@ -40,14 +40,6 @@ jobs:
     - name: HashiCorp - default init  
       id: defaultinit
       run: terraform init  
-
-        
-    - name: HashiCorp - workspace create 
-      id: workspace
-      run: |
-            terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
-      continue-on-error: true
-
       
     - name: 'Terraform format'
       id: fmt
@@ -61,7 +53,14 @@ jobs:
       run: terraform validate 
       env:
        TF_WORKSPACE: ${{env.workspacename}}
+
         
+    - name: HashiCorp - workspace create 
+      id: workspace
+      run: |
+            terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
+      continue-on-error: true
+             
     - name: 'Terraform Plan'
       id: plan
       run: terraform plan -var-file=${{ env.tfvarfilepath }}
