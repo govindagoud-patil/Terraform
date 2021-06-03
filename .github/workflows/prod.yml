@@ -51,7 +51,7 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -reconfigure
+      run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate" -reconfigure  
       env:
        TF_WORKSPACE: ${{env.workspacename}}
 
