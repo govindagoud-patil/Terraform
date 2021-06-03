@@ -10,6 +10,7 @@ env:
  tfvarfilepath: "./dev/dev.tfvars"
  workspacename: "client1"
  tfworkingDirectory: .
+ 
 
 jobs:
   terraform:
@@ -19,7 +20,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
- 
 
     runs-on: ubuntu-latest
     
@@ -27,6 +27,7 @@ jobs:
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
+        shell : bash
         working-directory: ${{env.tfworkingDirectory}}
 
     steps:
@@ -47,30 +48,43 @@ jobs:
             terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
       continue-on-error: true
 
+
     - name: 'Terraform init'
       id: init
-      run: terraform init -var-file=${{ env.tfvarfilepath }}
+      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+
       
     - name: 'Terraform format'
       id: fmt
       run: terraform fmt -check 
       continue-on-error: true
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
       
     - name: 'Terraform validate'
       id: validate
       run: terraform validate 
-          
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+        
     - name: 'Terraform Plan'
       id: plan
       run: terraform plan -var-file=${{ env.tfvarfilepath }}
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
     
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
       run: exit 1
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
       
     - name: 'Terraform apply'
       id: apply
       run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
-      
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
 
 
