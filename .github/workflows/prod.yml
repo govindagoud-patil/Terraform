@@ -39,20 +39,19 @@ jobs:
     
     - name: HashiCorp - default init  
       id: defaultinit
-      run: terraform init -reconfigure 
+      run: terraform init  
 
         
     - name: HashiCorp - workspace create 
       id: workspace
       run: |
-            terraform workspace new ${{env.workspacename}}
-            terraform worksspace select ${{env.workspacename}} 
+             terraform workspace select ${{env.workspacename}} || terraform worksspace new ${{env.workspacename}}              
       continue-on-error: true
 
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate" -reconfigure
+      run: terraform init -reconfigure
       env:
        TF_WORKSPACE: ${{env.workspacename}}
 
