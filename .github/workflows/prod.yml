@@ -81,10 +81,10 @@ jobs:
       env:
        TF_WORKSPACE: ${{env.workspacename}}
       
-    - name: 'Terraform apply'
-      id: apply
-      run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
-      env:
-       TF_WORKSPACE: ${{env.workspacename}}
+   # - name: 'Terraform apply'
+   #   id: apply
+   #   run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
+   #   env:
+   #    TF_WORKSPACE: ${{env.workspacename}}
 
 
