@@ -48,13 +48,6 @@ jobs:
             terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
       continue-on-error: true
 
-
-    - name: 'Terraform init'
-      id: init
-      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }} -backend-config="container_name=state"
-      env:
-       TF_WORKSPACE: ${{env.workspacename}}
-
       
     - name: 'Terraform format'
       id: fmt
