@@ -39,7 +39,7 @@ jobs:
     
     - name: HashiCorp - default init  
       id: defaultinit
-      run: terraform init  
+      run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate
 
         
     - name: HashiCorp - workspace create 
@@ -51,7 +51,7 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -var-file=${{ env.tfvarfilepath }} -reconfigure -backend-config="key=${{env.workspacename}}/terraform.tfstate"
+      run: terraform init -var-file=${{ env.tfvarfilepath }} -backend-config="key=${{env.workspacename}}/terraform.tfstate -reconfigure 
       env:
        TF_WORKSPACE: ${{env.workspacename}}
 
