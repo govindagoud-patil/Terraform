@@ -39,13 +39,14 @@ jobs:
     
     - name: HashiCorp - default init  
       id: defaultinit
-      run: terraform init  
+      run: terraform init -reconfigure 
 
         
     - name: HashiCorp - workspace create 
       id: workspace
       run: |
-            terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
+            terraform workspace new ${{env.workspacename}}
+            terraform worksspace select ${{env.workspacename}} 
       continue-on-error: true
 
 
