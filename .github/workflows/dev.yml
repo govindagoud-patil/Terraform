@@ -43,9 +43,7 @@ jobs:
     - name : check git hub variable
       run : |
                 
-                 $branchName = $Env:GITHUB_REF -replace "refs/heads/", ""
-                 echo "CURRENT_BRANCH=${branchName}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-                 echo ${{env.CURRENT_BRANCH}}
+                echo ${GITHUB_REF##*/}
 
         
     - name: HashiCorp - workspace create 
