@@ -65,7 +65,7 @@ jobs:
       
     - name: 'Terraform validate'
       id: validate
-      run: terraform validate -var-file=${{ env.tfvarfilepath }}
+      run: terraform validate 
       env:
        TF_WORKSPACE: ${{env.workspacename}}
         
