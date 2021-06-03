@@ -51,7 +51,7 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init  -backend-config="key=${{env.workspacename}}/terraform.tfstate" -migrate-state 
+      run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate" 
       env:
        TF_WORKSPACE: ${{env.workspacename}}
 
