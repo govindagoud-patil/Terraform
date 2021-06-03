@@ -51,7 +51,7 @@ jobs:
 
     - name: 'Terraform init'
       id: init
-      run: terraform init -var-file=${{ env.tfvarfilepath }} -backend-config="key=${{env.workspacename}}/terraform.tfstate" -migrate-state
+      run: terraform init -var-file=${{ env.tfvarfilepath }} -backend-config="key=${{env.workspacename}}/terraform.tfstate" -migrate-state -force-copy
       env:
        TF_WORKSPACE: ${{env.workspacename}}
 
