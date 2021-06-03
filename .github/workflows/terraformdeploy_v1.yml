@@ -1,0 +1,90 @@
+name: 'Terraform dev'
+
+on:
+ # push:
+ #  branches:
+ #   - master
+  workflow_dispatch:
+
+env:  
+ tfvarfilepath: "./dev/dev.tfvars"
+ workspacename: "dev"
+ tfworkingDirectory: .
+ 
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+
+    runs-on: ubuntu-latest
+    
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell : bash
+        working-directory: ${{env.tfworkingDirectory}}
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1.3.2
+      with:
+       terraform_version: 0.15.5
+    
+    - name: HashiCorp - default init  
+      id: defaultinit
+      run: terraform init  
+
+        
+    - name: HashiCorp - workspace create 
+      id: workspace
+      run: |
+            terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
+      continue-on-error: true
+
+
+    - name: 'Terraform init'
+      id: init
+      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+
+      
+    - name: 'Terraform format'
+      id: fmt
+      run: terraform fmt -check 
+      continue-on-error: true
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+      
+    - name: 'Terraform validate'
+      id: validate
+      run: terraform validate 
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+        
+    - name: 'Terraform Plan'
+      id: plan
+      run: terraform plan -var-file=${{ env.tfvarfilepath }}
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+    
+    - name: Terraform Plan Status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+      
+    - name: 'Terraform apply'
+      id: apply
+      run: terraform apply -var-file=${{ env.tfvarfilepath }} -auto-approve
+      env:
+       TF_WORKSPACE: ${{env.workspacename}}
+
+
