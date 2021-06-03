@@ -7,10 +7,9 @@ on:
   workflow_dispatch:
 
 env:  
- tfvarfilepath: "./prod/prod.tfvars"
+ tfvarfilepath: "./dev/dev.tfvars"
  workspacename: "prod"
  tfworkingDirectory: .
- clientName : "prod"
 
 jobs:
   terraform:
@@ -39,7 +38,7 @@ jobs:
     
     - name: HashiCorp - default init  
       id: defaultinit
-      run: terraform init -backend-config="key=${{env.clientName}}/terraform.tfstate"
+      run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate" 
 
         
     - name: HashiCorp - workspace create 
