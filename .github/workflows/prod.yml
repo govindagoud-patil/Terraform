@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
 
 env:  
- tfvarfilepath: "./prod/prod.tfvars"
- workspacename: "prod"
+ tfvarfilepath: "./test/test.tfvars"
+ workspacename: "test"
  tfworkingDirectory: .
- clientName : "prod"
+ clientName : "test"
 
 jobs:
   terraform:
