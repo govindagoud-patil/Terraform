@@ -40,6 +40,12 @@ jobs:
       id: defaultinit
       run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate" 
 
+    - name : check git hub variable
+      run : |
+                echo $GITHUB_HEAD_REF
+                echo $GITHUB_REF
+                echo $GITHUB_EVENT_NAME
+                echo $GITHUB_WORKFLOW
         
     - name: HashiCorp - workspace create 
       id: workspace
