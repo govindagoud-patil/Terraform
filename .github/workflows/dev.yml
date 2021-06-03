@@ -46,15 +46,6 @@ jobs:
              terraform workspace new ${{env.workspacename}}                     
       continue-on-error: true
 
-    - name: variable
-      env: 
-       githubname: ${{ github.base_ref }}
-       githubnumber: ${{ github.event.number }}
-      run: | 
-             echo $githubname
-             echo $githubnumber
-             echo "$GITHUB_CONTEXT"
-
     - name: 'Terraform init'
       id: init
       run: terraform init -backend-config="key=${{env.workspacename}}/terraform.tfstate" -reconfigure 
