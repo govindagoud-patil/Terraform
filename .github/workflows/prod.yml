@@ -8,7 +8,7 @@ on:
 
 env:  
  tfvarfilepath: "./prod/prod.tfvars"
- workspacename: "prod"
+ workspacename: "prod1"
  tfworkingDirectory: .
  
 
@@ -45,7 +45,7 @@ jobs:
     - name: HashiCorp - workspace create 
       id: workspace
       run: |
-             terraform workspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}                    
+             terraform workspace new ${{env.workspacename}}                     
       continue-on-error: true
 
 
