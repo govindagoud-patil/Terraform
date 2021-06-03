@@ -33,9 +33,9 @@ jobs:
     steps:
     # Checkout the repository to the GitHub Actions runner
     - uses: actions/checkout@v2
-    - uses: hashicorp/setup-terraform@v1.2.1
+    - uses: hashicorp/setup-terraform@v1.3.2
       with:
-       terraform_version: 0.14.8
+       terraform_version: 0.15.5
     
     - name: HashiCorp - default init  
       id: defaultinit
@@ -45,8 +45,7 @@ jobs:
     - name: HashiCorp - workspace create 
       id: workspace
       run: |
-             terraform workspace new ${{env.workspacename}}
-             terraform workspace select ${{env.workspacename}}             
+             terraform workspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}                    
       continue-on-error: true
 
 
