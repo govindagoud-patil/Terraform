@@ -8,9 +8,9 @@ on:
 
 env:  
  tfvarfilepath: "./prod/prod.tfvars"
- workspacename: "prod3"
+ workspacename: "prod"
  tfworkingDirectory: .
- clientName : "abc"
+ clientName : "prod"
 
 jobs:
   terraform:
