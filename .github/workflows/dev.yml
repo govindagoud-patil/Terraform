@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:  
- tfvarfilepath: "./dev/dev.tfvars"
- workspacename: "client1"
+ tfvarfilepath: "./test/test.tfvars"
+ workspacename: "client2"
  tfworkingDirectory: .
  
 
