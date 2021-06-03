@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:  
- tfvarfilepath: "./dev/dev.tfvars"
- workspacename: "dev"
+ tfvarfilepath: "./prod/prod.tfvars"
+ workspacename: "prod"
  tfworkingDirectory: .
 
 jobs:
