@@ -60,6 +60,10 @@ jobs:
       run: |
             terraform worksspace select ${{env.workspacename}} || terraform workspace new ${{env.workspacename}}
       continue-on-error: true
+      
+    - name: HashiCorp - default init  
+      id: init
+      run: terraform init -reconfigure -var-file=${{ env.tfvarfilepath }}
              
     - name: 'Terraform Plan'
       id: plan
